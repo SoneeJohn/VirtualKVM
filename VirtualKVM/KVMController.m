@@ -135,7 +135,7 @@
 #pragma mark - KVMThunderboltObserverDelegate
 
 - (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
-  NSLog(@"Thunderbolt device connected.");
+  NSLog(@"DisplayPort/Thunderbolt device connected.");
   [self updateConnectionState:YES];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
@@ -152,7 +152,7 @@
 }
 
 - (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
-  NSLog(@"Thunderbolt device disconnected.");
+  NSLog(@"DisplayPort/Thunderbolt device disconnected.");
   [self updateConnectionState:NO];
 
   if ([GVUserDefaults standardUserDefaults].toggleTargetDisplayMode) {
