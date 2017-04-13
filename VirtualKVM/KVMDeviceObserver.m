@@ -1,11 +1,11 @@
-#import "KVMThunderboltObserver.h"
+#import "KVMDeviceObserver.h"
 #import "KVMSystemProfiler.h"
 
 static NSTimeInterval const kTimeInterval = 2.0;
 
 typedef void (^DispatchRepeatCompletionHandler)(BOOL repeat);
 typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHandler);
-@interface KVMThunderboltObserver ()
+@interface KVMDeviceObserver ()
 
 @property BOOL initialized;
 @property BOOL macConnected;
@@ -16,7 +16,7 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 @end
 
 
-@implementation KVMThunderboltObserver
+@implementation KVMDeviceObserver
 
 #pragma mark - Public Interface
 
@@ -105,19 +105,19 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
 
 - (void)notifyDelegateOfConnectionChange {
   if (self.macConnected) {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(thunderboltObserverDeviceConnected:)]) {
-      [self.delegate thunderboltObserverDeviceConnected:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceObserverConnected:)]) {
+      [self.delegate deviceObserverConnected:self];
     }
   } else {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(thunderboltObserverDeviceDisconnected:)]) {
-      [self.delegate thunderboltObserverDeviceDisconnected:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(deviceObserverDisconnected:)]) {
+      [self.delegate deviceObserverDisconnected:self];
     }
   }
 }
 
 - (void)notifyDelegateOfInitialization {
-  if (self.delegate && [self.delegate respondsToSelector:@selector(thunderboltObserver:isInitiallyConnected:)]) {
-    [self.delegate thunderboltObserver:self isInitiallyConnected:self.macConnected];
+  if (self.delegate && [self.delegate respondsToSelector:@selector(deviceObserver:isInitiallyConnected:)]) {
+    [self.delegate deviceObserver:self isInitiallyConnected:self.macConnected];
   }
 }
 

@@ -8,7 +8,7 @@
 
 @interface KVMController ()
 
-@property (nonatomic, strong) KVMThunderboltObserver *thunderboltObserver;
+@property (nonatomic, strong) KVMDeviceObserver *deviceObserver;
 @property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic) IOPMAssertionID sleepAssertion;
 @property (nonatomic) BOOL isClient;
@@ -45,8 +45,8 @@
   self.isClient = [[KVMController machineModel] rangeOfString:@"iMac"].location == NSNotFound;
     
     if (!self.isClient) {
-        self.thunderboltObserver = [[KVMThunderboltObserver alloc] initWithDelegate:self];
-        [self.thunderboltObserver startObserving];
+        self.deviceObserver = [[KVMDeviceObserver alloc] initWithDelegate:self];
+        [self.deviceObserver startObserving];
     }
 
 
@@ -132,9 +132,9 @@
   [[NSApplication sharedApplication] terminate:self];
 }
 
-#pragma mark - KVMThunderboltObserverDelegate
+#pragma mark - KVMDeviceObserverDelegate
 
-- (void)thunderboltObserverDeviceConnected:(KVMThunderboltObserver *)observer {
+- (void)deviceObserverConnected:(KVMDeviceObserver *)observer {
   NSLog(@"DisplayPort/Thunderbolt device connected.");
   [self updateConnectionState:YES];
 
@@ -151,7 +151,7 @@
   }
 }
 
-- (void)thunderboltObserverDeviceDisconnected:(KVMThunderboltObserver *)observer {
+- (void)deviceObserverDisconnected:(KVMDeviceObserver *)observer {
   NSLog(@"DisplayPort/Thunderbolt device disconnected.");
   [self updateConnectionState:NO];
 
@@ -168,7 +168,7 @@
   }
 }
 
-- (void)thunderboltObserver:(KVMThunderboltObserver *)observer isInitiallyConnected:(BOOL)connected {
+- (void)deviceObserver:(KVMDeviceObserver *)observer isInitiallyConnected:(BOOL)connected {
   [self updateConnectionState:connected];
 
   if (connected) {
@@ -197,7 +197,7 @@
 
 - (void)enableTargetDisplayMode {
   NSLog(@"Attempting to enable TDM.");
-  if (self.thunderboltObserver.isInTargetDisplayMode || self.clientIsInTargetDisplayMode) {
+  if (self.deviceObserver.isInTargetDisplayMode || self.clientIsInTargetDisplayMode) {
       NSLog(@"Early return when attempting to enable TDM.");
     return;
   }

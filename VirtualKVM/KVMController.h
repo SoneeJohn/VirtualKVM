@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import "KVMThunderboltObserver.h"
+#import "KVMDeviceObserver.h"
 
 @interface KVMController : NSObject<KVMThunderBoltObserverDelegate>
 
