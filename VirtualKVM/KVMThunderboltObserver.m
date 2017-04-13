@@ -154,7 +154,11 @@ typedef void (^DispatchRepeatBlock)(DispatchRepeatCompletionHandler completionHa
     NSArray *displays = gpu[@"spdisplays_ndrvs"];
 
     for (NSDictionary *display in displays) {
-      if ([display[@"_name"] isEqualToString:@"iMac"] && [display[@"spdisplays_builtin"] isEqualToString:@"spdisplays_yes"]) {
+      if (
+        [display[@"_name"] isEqualToString:@"iMac"] &&
+        [display[@"_spdisplays_display-vendor-id"] isEqualToString:@"610"] &&
+        [display[@"spdisplays_main"] isEqualToString:@"spdisplays_yes"]
+      ) {
         if (display[@"_spdisplays_displayport_device"] == nil) {
           return YES;
         }
